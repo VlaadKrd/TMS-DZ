@@ -1,0 +1,27 @@
+#!/bin/bash
+
+PGPASSWORD=superpassword
+export PGPASSWORD
+db_name=mydbtest
+db_user=postgres
+db_host=127.0.0.1
+backupfolder=~/opt
+sqlfile=$backupfolder/mysql_backup.sql
+
+if pg_dump -U $db_user -h $db_host $db_name > $sqlfile ; then
+   echo 'Sql dump created'
+else
+   echo 'pg_dump return non-zero code'
+   exit
+fi
+
+unset PGPASSWORD
+
+ip_store=34.221.164.219
+
+if rsync -avz $sqlfile ubuntu@$ip_store:~/opt/store/mysql ; then
+   echo 'backup to the server "store" completed successfully'
+else
+   echo 'transfer to server failed'
+fi
+
