@@ -1,0 +1,43 @@
+Создать ВМ с любым веб-сервером.
+Создать домен <name>.local и сделать его доступным
+через /etc/hosts (или DNS, если есть).
+Создать self-signed сертификат.
+Добавить сертификат в веб-сервер и настроить
+прослушивание HTTPS.
+Создать перенаправление с HTTP на HTTPS.
+Создать перенаправление с www.<name>.local на
+<name>.local
+Сделать self-signed SSL сертификат доверенным.
+Вся настройка должна выполняться либо скриптом, либо
+плейбуком.
+
+--------------------------------
+
+sudo nano /etc/nginx/conf.d/default.conf
+
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+sudo nano /etc/hosts
+127.0.0.1       localhost tms.local
+
+sudo service nginx restart
+
+Чтобы создать закрытый ключ и запрос на подпись открытого ключа выполните
+такую команду:
+openssl req -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
+ls -l
+total 8
+-rw-rw-r-- 1 vlad vlad 1070 Feb  3 19:57 domain.csr
+-rw------- 1 vlad vlad 1704 Feb  3 19:54 domain.key
+
+
+Подпишем сертификат сами, ключом, на основе которого он был создан:
+openssl x509 -signkey domain.key -in domain.csr -req -days 365 -out domain.crt
+Signature ok
+subject=C = BL, ST = Minsk, L = Minsk, O = TMS, OU = IO-IT, CN = tms.local, emailAddress = futfI@mail.com
+Getting Private key
+
+Смотрим содержимое сертификата в режиме обычного текста:
+openssl x509 -text -noout -in domain.crt
