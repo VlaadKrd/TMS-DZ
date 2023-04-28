@@ -1,0 +1,58 @@
+Started by user Vlad
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Agent1 in /home/jenkins/workspace/Job-1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] git
+The recommended git tool is: NONE
+using credential github-ssh-key
+Fetching changes from the remote Git repository
+ > git rev-parse --resolve-git-dir /home/jenkins/workspace/Job-1/.git # timeout=10
+ > git config remote.origin.url git@github.com:VlaadKrd/TMS-DZ.git # timeout=10
+Fetching upstream changes from git@github.com:VlaadKrd/TMS-DZ.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_SSH to set credentials github-ssh-key
+Verifying host key using known hosts file, will automatically accept unseen keys
+ > git fetch --tags --force --progress -- git@github.com:VlaadKrd/TMS-DZ.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision 2608e89862cf9dadbfa17aab7e178f269c7d148c (refs/remotes/origin/main)
+Commit message: "Merge pull request #3 from VlaadKrd/Dev"
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 2608e89862cf9dadbfa17aab7e178f269c7d148c # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 2608e89862cf9dadbfa17aab7e178f269c7d148c # timeout=10
+ > git rev-list --no-walk 2608e89862cf9dadbfa17aab7e178f269c7d148c # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ ls -l
+total 20
+drwxr-xr-x 2 jenkins jenkins 4096 Apr 26 16:11 Lesson27
+drwxr-xr-x 2 jenkins jenkins 4096 Apr 26 16:11 Lesson29
+drwxr-xr-x 5 jenkins jenkins 4096 Apr 26 16:11 Lesson31
+drwxr-xr-x 2 jenkins jenkins 4096 Apr 26 16:11 Lesson32
+-rw-r--r-- 1 jenkins jenkins    8 Apr 26 16:11 README.md
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Ansible)
+[Pipeline] sh
++ ansible --version
+ansible 2.10.8
+  config file = None
+  configured module search path = ['/home/jenkins/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 3.9.2 (default, Feb 28 2021, 17:03:44) [GCC 10.2.1 20210110]
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

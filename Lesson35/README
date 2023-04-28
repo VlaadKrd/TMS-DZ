@@ -1,0 +1,4 @@
+Установить Jenkins в любом варианте.
+Установить плагин Blue Ocean, Ansible и любые другие на свой выбор.
+Создать pipeline, который:
+запускает несколько команд в разных stage (git clone , ansible-playbook, bash)

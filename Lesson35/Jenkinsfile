@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    options {
+          buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '4')
+    }    
+    
+    stages {
+        stage('Build') {
+            steps {
+                git branch: 'main', 
+                credentialsId: 'github-ssh-key', 
+                url: 'git@github.com:VlaadKrd/TMS-DZ.git'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "ls -l"
+            }
+        }
+        stage('Ansible') {
+        //     environment {
+        //         PATH = 'Lesson19'
+        //     }
+            steps{
+                sh '''
+                ansible --version
+                '''
+        //         ansiblePlaybook credentialsId: 'ansible-ssh-key', 
+        //         disableHostKeyChecking: true, 
+        //         inventory: '${PATH}/inventory.ini', 
+        //         playbook: '${PATH}/playbook/new_user.yml'
+            }
+        }
+    } 
+}
