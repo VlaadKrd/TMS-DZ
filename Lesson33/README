@@ -1,0 +1,7 @@
+Сделать python скрипт деплоя собранного docker образа в dev и prod окружения
+
+Окружение должно запускать в vagrant и выбираться при запуске скрипта deploy.py в качестве аргумента. 
+docker устанавливается в vagrant при provisioning docker image сохраняется через docker save в скрипте build.py 
+и загружается с помощью docker load в скрипте deploy.py
+
+Скрипт deploy.py должен разворачивать тот же образ, который собрал build.py

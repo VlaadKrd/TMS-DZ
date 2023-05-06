@@ -1,0 +1,23 @@
+  version: '3.8'
+  services:
+    jenkins:
+      image: jenkins/jenkins:lts
+      privileged: true
+      user: root
+      ports:
+      - 8080:8080
+      - 50000:50000
+      restart: always
+      container_name: jenkins
+      volumes:
+      - /Users/kurdykoff/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    agent:
+      image: jenkins/ssh-agent:jdk11
+      privileged: true
+      user: root
+      container_name: agent
+      expose:
+      - 22
+      environment:
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBoA9z+gVjTpieHe/FJbJwhsNfKzLO+P8748GkFsDdxNNqAGBTRV5VG/shmY47YqHt0UFqbqmr/5gyaYnPLy8CzkoSSDBv+y+zSVWYQFj4y5sqtVvTcq57UTqzrJujdRAkWy4262gx4czdxuVj38x4GQclZuCSwNmQb5qlIzU/mevRHicUJkM0uYcM3Hoyi1X9/qpQSgrci8z6MqhrQmbT0xJAjBA99oQ+O+ASs/gJpxQmDG3nZCr9K9EzPYKmpU59FLBKAHgxhEipN0V6WEzTlxuFO9Ak9yTW2zoLLnBa17qcOXDZ4//XiL07lxqJuCMYtKDxEfowZmXidIHZB8BIJcbB3CFjoQBdeVU4k+Rtroc+Y0piT+ag+BjlmfolA3piGS9FZd/5R7BZ2OjomzN6/YLxOhfGgxlwdDAlZ2fgUTSrlKifop0+eEHG+TOUVowNWt/VtD8Whb78LJToFeWPsgdPecHshUt7YeFxXCF2NpXXpmkAmeapYogLOW1LZEk= kurdykoff@MacBook-Air-Vladislav.local
